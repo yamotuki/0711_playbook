@@ -1,0 +1,3 @@
+# Drop root to id 'ntp:ntp' by default.
+# start with slew mode
+OPTIONS="-x -u ntp:ntp -p /var/run/ntpd.pid -g"

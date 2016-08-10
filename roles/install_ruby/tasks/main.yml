@@ -1,0 +1,57 @@
+---
+# rbenv と ruby_build によるrubyのインストール。指定ユーザに対してだけインストールする。
+
+- name: install ruby dependencies
+  yum: name={{ item }} state=present
+  with_items: 
+    - readline-devel
+
+- name: install rbenv
+  git: repo="https://github.com/rbenv/rbenv" 
+       dest="/home/{{ RUBY_USER }}/.rbenv"  
+       version={{ RBENV_VERSION }}
+  sudo_user: "{{ RUBY_USER }}"  
+
+- name: install ruby-build plugin
+  git: repo="https://github.com/rbenv/ruby-build" 
+       dest="/home/{{ RUBY_USER }}/.rbenv/plugins/ruby-build"
+       version={{ RUBY_BUILD_VERSION }}
+  sudo_user: "{{ RUBY_USER }}"  
+
+- name: add .rbenv/bin to PATH
+  lineinfile: dest=/home/{{ RUBY_USER }}/.bash_profile state=present line='export PATH="$HOME/.rbenv/bin:$PATH"'
+
+# shとbashを使う場合の記述。今後他のシェルを使う場合には"~/.rbenv/bin/rbenv init" で確認して分岐させるとよい
+- name: rbenv init 
+  lineinfile: dest=/home/{{ RUBY_USER }}/.bash_profile state=present line='eval "$(rbenv init -)"'
+
+- name: check installed ruby version
+  shell: "/home/{{ RUBY_USER }}/.rbenv/bin/rbenv versions | grep {{ RUBY_VERSION }}"  
+  register: ruby_version
+  failed_when: ruby_version.rc not in [0, 1]
+  sudo_user: "{{ RUBY_USER }}"
+
+- name: install ruby with rbenv 
+  shell: "/home/{{ RUBY_USER }}/.rbenv/bin/rbenv install {{ RUBY_VERSION }}" 
+  when: ruby_version.rc == 1
+  sudo_user: "{{ RUBY_USER }}"
+
+- name: select ruby version
+  shell: "/home/{{ RUBY_USER }}/.rbenv/bin/rbenv global {{ RUBY_VERSION }}"  
+  sudo_user: "{{ RUBY_USER }}"  
+
+# あとのrbenv rehashと重複しているが、ruby versionを設定したあとに、対応するgemを使う前に一回rehashしておく必要がある
+- name: rbenv rehash
+  shell: "/home/{{ RUBY_USER }}/.rbenv/bin/rbenv rehash"
+  when: ruby_version.rc == 1
+  sudo_user: "{{ RUBY_USER }}"  
+
+- name: bundler install
+  shell: "/home/{{ RUBY_USER }}/.rbenv/shims/gem install bundler"
+  when: ruby_version.rc == 1
+  sudo_user: "{{ RUBY_USER }}"  
+ 
+- name: rbenv rehash
+  shell: "/home/{{ RUBY_USER }}/.rbenv/bin/rbenv rehash"
+  when: ruby_version.rc == 1
+  sudo_user: "{{ RUBY_USER }}"  

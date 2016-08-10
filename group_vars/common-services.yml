@@ -1,0 +1,30 @@
+disabled_services:
+- acpid
+- avahi-daemon
+- bluetooth
+- cups
+- gpm
+- hidd
+- mcstrans
+- mdmonitor
+- messagebus
+- netfs
+- nfslock
+- pcscd
+- restorecond
+- rpcbind
+- rpcgssd
+- rpcidmapd
+- xfs
+- xinetd
+- ip6tables
+- iptables
+
+enabled_services:
+- crond
+- ipmi
+- network
+- ntpd
+- rsyslog
+- snmpd
+- sysstat

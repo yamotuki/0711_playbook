@@ -1,0 +1,14 @@
+# ntp setting 
+
+- name: setting ntp config file
+  copy: src=ntp.conf dest=/etc/ntp.conf owner=root group=root mode=0644
+
+- name: setting ntp startup option
+  copy: src=sysconfig_ntpd dest=/etc/sysconfig/ntpd owner=root group=root mode=0644
+
+- name: setting timezone 
+  file: src=/usr/share/zoneinfo/Japan  dest=/etc/localtime  state=link  force=yes
+
+- name: restart ntpd
+  service: name=ntpd enabled=yes state=restarted
+

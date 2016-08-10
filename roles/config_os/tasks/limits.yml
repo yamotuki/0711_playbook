@@ -1,0 +1,6 @@
+---
+- name: setting limits.conf
+  copy: src=limits.conf dest=/etc/security/limits.conf owner=root group=root mode=644
+
+- name: setting empty 90-nproc.conf
+  copy: src=90-nproc.conf dest=/etc/security/limits.d/90-nproc.conf owner=root group=root mode=644

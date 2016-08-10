@@ -1,0 +1,38 @@
+---
+  - name: top nginx.conf settings
+    template: src="nginx.conf.j2" dest="{{ NGINX_PREFIX }}/conf/nginx.conf"  mode=0644 owner=root group=root
+
+  - name: create proxy_temp directories
+    file: path={{ NGINX_PREFIX }}/proxy_temp/ state=directory  mode=0700 owner=nginx group=nginx
+
+  - name: create conf.d directory
+    file: path={{ NGINX_PREFIX }}/conf.d/ state=directory  mode=0755 owner=root group=root
+
+  - name: create vhosts directory
+    file: path={{ NGINX_PREFIX }}/conf.d/vhosts state=directory  mode=0755 owner=root group=root
+
+  - name: setting default virtual host
+    template: src=virtual.conf.j2  dest={{ NGINX_PREFIX }}/conf.d/virtual.conf
+
+  - name: setting virtual hosts
+    template: src={{SERVER_ROLE}}_nginx_vhosts/{{ item }}.conf.j2  dest={{ NGINX_PREFIX }}/conf.d/vhosts/{{ item }}.conf
+    with_items: NGINX_VIRTUAL_HOSTS  
+  
+  - name: setting allow ip list
+    copy: src={{ item }}.conf dest={{ NGINX_PREFIX }}/conf/{{ item }}.conf
+    with_items: 
+      - common-ip
+
+  - name: create log directory
+    file: path=/var/log/nginx state=directory  mode=0755 owner=root group=root
+
+  - name: put index.html page
+    copy: src=index.html  dest={{ NGINX_PREFIX }}/html/index.html  mode=0644 owner=root group=root
+
+  - name: nginx init script settings
+    template: src=nginx_init.j2 dest=/etc/init.d/nginx mode=755 owner=root group=root
+
+  - name: restart nginx and add chkconfig
+    service: name=nginx state=restarted enabled=yes
+
+

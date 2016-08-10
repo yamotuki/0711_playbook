@@ -1,0 +1,14 @@
+ENABLED_KERNEL_PARAM:
+  - { regexp_string: '^net.ipv4.ip_local_port_range', line_string: 'net.ipv4.ip_local_port_range = 10000 65535'}
+  - { regexp_string: '^net.ipv4.tcp_tw_reuse', line_string: 'net.ipv4.tcp_tw_reuse = 1'}
+  - { regexp_string: '^vm.overcommit_memory', line_string: 'vm.overcommit_memory = 2'}
+  - { regexp_string: '^vm.overcommit_ratio', line_string: 'vm.overcommit_ratio = 99'}
+  - { regexp_string: '^vm.panic_on_oom', line_string: 'vm.panic_on_oom = 1'}
+  - { regexp_string: '^kernel.panic', line_string: 'kernel.panic = 10' }
+  - { regexp_string: '^fs.file-max', line_string: 'fs.file-max = 327680' }
+
+UNNECESSARY_KERNEL_PARAM:
+  - { regexp_string: "^net.bridge.bridge-nf-call-ip6tables" } 
+  - { regexp_string: "^net.bridge.bridge-nf-call-iptables" } 
+  - { regexp_string: "^net.bridge.bridge-nf-call-arptables" } 
+  

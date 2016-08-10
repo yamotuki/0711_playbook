@@ -1,0 +1,21 @@
+
+- name: create current working dir
+  file: path={{ MAKE_CWD_DIR }} state=directory owner={{ ADMIN_GROUP_NAME }} group={{ ADMIN_GROUP_NAME }} mode=755
+
+- name: get epel repo rpm
+  get_url: url=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm dest={{ MAKE_CWD_DIR }}
+
+- name: install epel repo
+  shell: rpm -ivh {{ MAKE_CWD_DIR }}epel-release-6-8.noarch.rpm
+  ignore_errors: yes
+
+- name: disabled epel repo 
+  replace: dest=/etc/yum.repos.d/epel.repo regexp="enabled=.*" replace="enabled=0"
+
+- name: install packages with CentOS repo
+  yum: name="{{ item }}" state=latest 
+  with_items: centos_packages
+
+- name: install packages with epel repo
+  yum: name="{{ item }}" state=latest enablerepo=epel
+  with_items: epel_packages

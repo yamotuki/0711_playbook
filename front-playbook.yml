@@ -1,0 +1,32 @@
+---
+- hosts: all 
+  sudo: yes 
+  remote_user: admin
+ # gather_facts: no
+  vars_files: 
+    - ../../group_vars/uid_gid_set.yml
+    - ../../group_vars/common-vars.yml
+    - ../../group_vars/common-packages.yml
+    - ../../group_vars/common-services.yml
+    - ../../group_vars/front/nginx_vars.yml
+
+
+  roles: 
+     - roles/config_os
+ #   - roles/yum_update
+     - roles/install_packages
+     - roles/config_services
+     - roles/config_ntp
+
+ #   - roles/install_zabbix-agentd
+ #   - roles/install_mysql-client
+ 
+     - roles/install_nginx
+     - roles/config_nginx
+
+ #  - .oles/logrotate
+    
+     - roles/install_git
+     - roles/install_ruby
+
+     - roles/reboot_server

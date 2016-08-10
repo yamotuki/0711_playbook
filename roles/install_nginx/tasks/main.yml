@@ -1,0 +1,54 @@
+---
+
+  - name:  create nginx group
+    group:  name="{{ NGINX_USER }}" gid="{{ NGINX_USER_UID }}"
+
+  - name:  create nginx user
+    user:   name="{{ NGINX_USER }}" uid="{{ NGINX_USER_UID }}" group="{{ NGINX_USER }}"
+
+  - name: create make dir for openCV
+    file: path={{ MAKE_CWD_DIR }} state=directory owner={{ ADMIN_GROUP_NAME }} group={{ ADMIN_GROUP_NAME }} mode=755
+
+
+  - name: check nginx source file
+    stat: path={{ MAKE_CWD_DIR }}nginx-{{ NGINX_VERSION }}.tar.gz
+    register: check_nginx_src_file
+
+  - name: download nginx source
+    sudo: no
+    get_url: url=http://nginx.org/download/{{ NGINX_TARBALL }}  dest={{ MAKE_CWD_DIR }}
+    when: not check_nginx_src_file.stat.exists
+
+  - name: unarchive nginx tarball
+    sudo: no
+    shell: >
+      cd {{ MAKE_CWD_DIR }} &&
+      tar zvxf nginx-{{ NGINX_VERSION }}.tar.gz
+
+  - name: make clean nginx
+    sudo: no
+    shell: make clean
+    args:
+      chdir: "{{ MAKE_CWD_DIR }}nginx-{{ NGINX_VERSION }}"
+    ignore_errors: yes
+
+  - name: configure nginx
+    sudo: no
+    shell: ./configure {{ NGINX_CONFIGURE_OPTION }}
+    args:
+      chdir: "{{ MAKE_CWD_DIR }}nginx-{{ NGINX_VERSION }}"
+
+  - name: make nginx
+    sudo: no
+    shell: make
+    args:
+      chdir: "{{ MAKE_CWD_DIR }}nginx-{{ NGINX_VERSION }}"
+
+  - name: make install nginx
+    sudo: yes
+    shell: sudo make install
+    args:
+      chdir: "{{ MAKE_CWD_DIR }}nginx-{{ NGINX_VERSION }}"
+
+  - name: link to prefix
+    file: src="{{ NGINX_PREFIX }}-{{ NGINX_VERSION }}" dest={{ NGINX_PREFIX }} state=link

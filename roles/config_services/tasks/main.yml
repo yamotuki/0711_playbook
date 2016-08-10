@@ -1,0 +1,14 @@
+- name: config services to enable
+  service: name="{{ item }}" enabled=yes state=started
+  with_items: enabled_services
+  ignore_errors: yes
+- name: config services to disable
+  service: name="{{ item }}" enabled=no state=stopped
+  with_items: disabled_services
+  ignore_errors: yes
+
+- name: install libselinux-python for ansible selinux module
+  yum: name=libselinux-python state=present 
+- name: disable selinux 
+  selinux: state=disabled
+

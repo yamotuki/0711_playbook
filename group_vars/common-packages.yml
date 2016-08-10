@@ -1,0 +1,45 @@
+centos_packages:
+ - lm_sensors
+ - net-snmp
+ - net-snmp-utils
+ - net-snmp-libs
+ - net-snmp-devel
+ - OpenIPMI
+ - OpenIPMI-libs
+ - OpenIPMI-devel
+ - libevent
+ - libevent-devel
+ - libjpeg-turbo-devel
+ - libtool-ltdl-devel
+ - ntp
+ - ntpdate
+ - bind-utils
+ - sysstat
+ - lsof
+ - telnet
+ - tcpdump
+ - gcc
+ - gcc-c++
+ - make
+ - autoconf
+ - zip
+ - unzip
+ - lzop
+ - vim-enhanced
+ - curl
+ - wget
+ - libaio
+ - net-tools
+ - zsh
+ - screen
+ - man
+ - mlocate
+ - pcre-devel
+ - libcurl-devel
+ - openssl-devel
+ - perf
+ - cronie 
+ - cronie-anacron
+
+epel_packages:
+ - tmux

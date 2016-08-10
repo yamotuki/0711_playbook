@@ -1,0 +1,17 @@
+# sysctl.confで出来るカーネルパラメータの設定
+
+
+- name: setting comment before kernel parameter 
+  lineinfile: dest=/etc/sysctl.conf state=present line='# added kernel parameter with ansible'
+
+- name: setting kernel parameter 
+  lineinfile: dest=/etc/sysctl.conf state=present regexp="{{item.regexp_string}}" line='{{item.line_string}}'
+  with_items: ENABLED_KERNEL_PARAM
+
+- name: unnecessary kernel parameter setting 
+  lineinfile: dest=/etc/sysctl.conf state=absent regexp="{{item.regexp_string}}" 
+  with_items: UNNECESSARY_KERNEL_PARAM  
+
+- name: kernel parameter setting activation
+  shell: "sysctl -p"
+  sudo: yes

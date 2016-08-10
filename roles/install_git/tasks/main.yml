@@ -1,0 +1,10 @@
+---
+
+- name: check git version
+  shell: "git --version  | awk '{print $3}'"
+  register: check_git_version
+  ignore_errors: yes
+
+- name: include git install
+  include: install.yml
+  when: check_git_version.stdout != "{{ git_version }}"
