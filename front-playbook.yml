@@ -1,14 +1,14 @@
 ---
 - hosts: all 
   sudo: yes 
-  remote_user: admin
+  remote_user: vagrant
  # gather_facts: no
   vars_files: 
-    - ../../group_vars/uid_gid_set.yml
-    - ../../group_vars/common-vars.yml
-    - ../../group_vars/common-packages.yml
-    - ../../group_vars/common-services.yml
-    - ../../group_vars/front/nginx_vars.yml
+    - group_vars/uid_gid_set.yml
+    - group_vars/common-vars.yml
+    - group_vars/common-packages.yml
+    - group_vars/common-services.yml
+    - group_vars/front/nginx_vars.yml
 
 
   roles: 

@@ -6,9 +6,8 @@
   - name:  create nginx user
     user:   name="{{ NGINX_USER }}" uid="{{ NGINX_USER_UID }}" group="{{ NGINX_USER }}"
 
-  - name: create make dir for openCV
+  - name: create make dir for nginx
     file: path={{ MAKE_CWD_DIR }} state=directory owner={{ ADMIN_GROUP_NAME }} group={{ ADMIN_GROUP_NAME }} mode=755
-
 
   - name: check nginx source file
     stat: path={{ MAKE_CWD_DIR }}nginx-{{ NGINX_VERSION }}.tar.gz
