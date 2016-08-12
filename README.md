@@ -9,6 +9,7 @@
 * sudoer  wheel 設定 　★
 * sudo yum install libselinux-python   (どこかで入れればよい？　selinux 設定まえ) ★
 * 手元のansible control 環境の公開鍵をadminユーザのadmin.pubのリストに追加しておく
+
 ## コマンド   
 ### adminユーザの作成
 `ansible-playbook  -u vagrant -k -c paramiko -i inventories/front_vagrant  user-playbook.yml`  
