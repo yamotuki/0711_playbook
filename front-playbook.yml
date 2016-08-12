@@ -1,7 +1,7 @@
 ---
 - hosts: all 
   sudo: yes 
-  remote_user: vagrant
+  remote_user: admin
  # gather_facts: no
   vars_files: 
     - group_vars/uid_gid_set.yml

@@ -1,0 +1,13 @@
+---
+
+- name: create admin group 
+  group: name={{ ADMIN_GROUP_NAME }} gid={{ ADMIN_GROUP_ID }} state=present
+
+- name: create admin user 
+  user: name={{ ADMIN_USER_NAME }} group={{ ADMIN_GROUP_ID }} groups=wheel state=present 
+
+- name: create admin .ssh dir 
+  file: path=/home/{{ ADMIN_USER_NAME }}/.ssh  owner={{ ADMIN_USER_NAME }}  group={{ ADMIN_GROUP_NAME }} mode=0700 state=directory
+
+- name: setting authrozed_keys
+  copy: src=admin.pub dest=/home/{{ ADMIN_USER_NAME }}/.ssh/authorized_keys   owner={{ ADMIN_USER_NAME }}  group={{ ADMIN_GROUP_NAME }} mode=0600

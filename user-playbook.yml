@@ -1,0 +1,11 @@
+---
+- hosts: all 
+  sudo: yes 
+  remote_user: vagrant
+  gather_facts: no
+  vars_files: 
+    - group_vars/uid_gid_set.yml
+
+  roles: 
+     - roles/user_admin
+     
