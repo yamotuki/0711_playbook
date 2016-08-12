@@ -8,4 +8,6 @@
 
   roles: 
      - roles/user_admin
+     - roles/user_common
+     
      

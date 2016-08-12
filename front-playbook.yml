@@ -9,6 +9,7 @@
     - group_vars/common-packages.yml
     - group_vars/common-services.yml
     - group_vars/front/nginx_vars.yml
+    - group_vars/front/ruby_vars.yml
 
 
   roles: 

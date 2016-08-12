@@ -17,3 +17,8 @@
 ### いろいろセッティング
 adminユーザを作成した上で用いる。現在のところ ansible 2.1.0の問題か分からないが、adminユーザに直接入って流そうとすると問題が起こるので-u vagrantでユーザ指定。
 `ansible-playbook -u vagrant -k -c paramiko -i inventories/front_vagrant  front-playbook.yml`  
+
+## userの役割  
+* admin: install とかサーバ管理のためにinfra全権を持っているユーザ
+* common: アプリケーションを動かすためのユーザ。sudo権限なし。rubyなどはこのユーザにのみインストールされる
+
