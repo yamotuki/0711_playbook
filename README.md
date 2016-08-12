@@ -11,4 +11,9 @@
 * sudo yum install libselinux-python   (どこかで入れればよい？　selinux 設定まえ) ★
   
 ## コマンド   
-`ansible-playbook -u vagrant -k -c paramiko -i inventories/front_vagrant  front-playbook.yml`  
+### adminユーザの作成
+`ansible-playbook  -u vagrant -k -c paramiko -i inventories/front_vagrant  user-playbook.yml`  
+
+### いろいろセッティング
+adminユーザを作成した上で用いる
+`ansible-playbook -i inventories/front_vagrant  front-playbook.yml`  
