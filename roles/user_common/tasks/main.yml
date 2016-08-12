@@ -1,0 +1,13 @@
+---
+
+- name: create common group 
+  group: name={{ COMMON_GROUP_NAME }} gid={{ COMMON_GROUP_ID }} state=present
+
+- name: create common user 
+  user: name={{ COMMON_USER_NAME }} group={{ COMMON_GROUP_ID }} groups=wheel state=present 
+
+#- name: create common .ssh dir 
+#  file: path=/home/{{ COMMON_USER_NAME }}/.ssh  owner={{ COMMON_USER_NAME }}  group={{ COMMON_GROUP_NAME }} mode=0700 state=directory
+#
+#- name: setting authrozed_keys
+#  copy: src=common.pub dest=/home/{{ COMMON_USER_NAME }}/.ssh/authorized_keys   owner={{ COMMON_USER_NAME }}  group={{ COMMON_GROUP_NAME }} mode=0600
