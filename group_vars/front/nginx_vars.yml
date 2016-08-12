@@ -11,5 +11,5 @@ KEY_ZONE_SIZE: "128m"
 CACHE_MAX_SIZE: "1024m"
 
 NGINX_VIRTUAL_HOSTS:
- - three
+ - front
 

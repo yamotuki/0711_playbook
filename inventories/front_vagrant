@@ -1,2 +1,4 @@
 front-vagrant
 
+[all:vars]
+SERVER_ROLE=front
