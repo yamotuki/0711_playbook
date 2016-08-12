@@ -7,9 +7,8 @@
 ## playbookを流す前にやるべきこと  
 実際には、ちゃんとこの部分もかけばいけるものもある。それについては★マークを付ける。
 * sudoer  wheel 設定 　★
-* admin ユーザ作る  useradd admin -G wheel 　★
 * sudo yum install libselinux-python   (どこかで入れればよい？　selinux 設定まえ) ★
-  
+* 手元のansible control 環境の公開鍵をadminユーザのadmin.pubのリストに追加しておく
 ## コマンド   
 ### adminユーザの作成
 `ansible-playbook  -u vagrant -k -c paramiko -i inventories/front_vagrant  user-playbook.yml`  
